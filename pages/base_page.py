@@ -44,10 +44,6 @@ class BasePage:
 
         return True
 
-    def go_to_users_page(self):
-        link = self.browser.find_element(*BasePageLocators.CARD_LINK)
-        link.click()
-
     def should_be_authorized_user(self):
-        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+        assert self.is_not_element_present(*BasePageLocators.LOGIN_LINK, 1), "There is login link in the page," \
                                                                      " probably unauthorised user"
