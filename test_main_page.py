@@ -28,6 +28,19 @@ class TestLoginFromMainPage:
         login_page.should_be_authorized_user()
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 class TestUserAddToBasketFromProductPage:
     @pytest.fixture(scope='function', autouse=True)
     def setup(self, browser):

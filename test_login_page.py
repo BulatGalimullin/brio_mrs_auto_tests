@@ -1,11 +1,26 @@
-from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
-from .pages.basket_page import BasketPage
 import pytest
-import faker
+import time
 
 
-#link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+link = "https://identity.briogroup.ru/Account/Login"
+
+
+class TestLoginPage:
+    @pytest.mark.parametrize('login,password',
+                         [(" ", "no_login"), ("no_password", "  "), ("  ", "  "), ("incorrect", "incorrect")])
+    def test_try_to_login_with_incorrect_inputs(self, browser, login, password):
+        login_page = LoginPage(browser, link)
+        login_page.open()
+        login_page.login(login, password)
+        time.sleep(0.01)
+        login_page.should_be_error_message()
+
+    def test_login_cancel(self, browser):
+        login_page =
+
+
+
 
 
 @pytest.mark.need_review

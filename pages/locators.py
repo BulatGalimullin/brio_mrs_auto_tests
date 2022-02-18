@@ -10,6 +10,7 @@ class LoginPageLocators:
     LOGIN_USERNAME = (By.CSS_SELECTOR, "input#Username")
     LOGIN_PASSWORD = (By.CSS_SELECTOR, "input#Password")
     LOGIN_BUTTON = (By.CSS_SELECTOR, "button[value = 'login']")
+    ALERT_MESSAGE = (By.CSS_SELECTOR, "div.alert-danger")
     REGISTRATION_SURNAME = (By.ID, "input-37")
     REGISTRATION_PATRONYMIC = (By.ID, "input-40")
     REGISTRATION_ORGANIZATION = (By.ID, "input-43")

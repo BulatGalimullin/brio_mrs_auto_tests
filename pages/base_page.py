@@ -46,4 +46,8 @@ class BasePage:
 
     def should_be_authorized_user(self):
         assert self.is_not_element_present(*BasePageLocators.LOGIN_LINK, 1), "There is login link in the page," \
-                                                                     " probably unauthorised user"
+                                                                              " probably unauthorised user"
+
+    def should_not_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK, 1), "There is no login link in the page," \
+                                                                     " probably user is authorized"
