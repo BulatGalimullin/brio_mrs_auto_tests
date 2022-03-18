@@ -1,7 +1,6 @@
 import subprocess
 import os
 
-
 def convert_to_xbim(converter_path, file_path):  # запускает конвертер моделей в xBim
     success = True
     text = []
@@ -54,36 +53,36 @@ def get_xbim_file_size_with_given_model_path(file_path):
     return xbim_size
 
 
-def get_info_about_converted_models(directory_path):
-    model_name = []
-    model_size = []
-    converted_xbim_size = []
-    allowed_formats = ['.stl', '.obj', '.ifc', '.ifczip']
-
-    file_paths = os.listdir(directory_path)  # получаем имя файла и её размер
-    files_and_dirs = list(map(lambda name: os.path.join(directory_path, name), file_paths))
-    # cоздаем список из xbim
-
-    # узнаем путь/имя и размеры модели
-    for file in files_and_dirs:
-        if os.path.isfile(file) and os.path.splitext(file)[1].casefold() in (allowed_formats[k].casefold() for k in
-                                                                             range(len(allowed_formats))):
-            model_name.append(file)
-            model_size.append(os.stat(file).st_size / (1024 * 1024))
-
-    # узнаем размеры xBIM
-    for file in files_and_dirs:
-        if os.path.isfile(file) and os.path.splitext(file)[1].casefold() == '.xBIM'.casefold() and \
-                os.path.splitext(file)[0].casefold() in (os.path.splitext(model_name[k])[0].casefold() for k in
-                                                         range(len(model_name))):
-            converted_xbim_size.append((os.stat(file).st_size / (1024 * 1024)))
-        else:  # (os.path.isfile(file) and os.path.splitext(file)[1].casefold() == '.xBIM'.casefold() or ):
-            converted_xbim_size.append('[ОШИБКА] xBIM файл отсутствует')
-
-    model_size = [round(v, 2) for v in model_size]
-    converted_xbim_size = [round(v, 2) for v in converted_xbim_size]
-
-    return model_name, model_size, converted_xbim_size
+# def get_info_about_converted_models(directory_path):
+#     model_name = []
+#     model_size = []
+#     converted_xbim_size = []
+#     allowed_formats = ['.stl', '.obj', '.ifc', '.ifczip']
+#
+#     file_paths = os.listdir(directory_path)  # получаем имя файла и её размер
+#     files_and_dirs = list(map(lambda name: os.path.join(directory_path, name), file_paths))
+#     # cоздаем список из xbim
+#
+#     # узнаем путь/имя и размеры модели
+#     for file in files_and_dirs:
+#         if os.path.isfile(file) and os.path.splitext(file)[1].casefold() in (allowed_formats[k].casefold() for k in
+#                                                                              range(len(allowed_formats))):
+#             model_name.append(file)
+#             model_size.append(os.stat(file).st_size / (1024 * 1024))
+#
+#     # узнаем размеры xBIM
+#     for file in files_and_dirs:
+#         if os.path.isfile(file) and os.path.splitext(file)[1].casefold() == '.xBIM'.casefold() and \
+#                 os.path.splitext(file)[0].casefold() in (os.path.splitext(model_name[k])[0].casefold() for k in
+#                                                          range(len(model_name))):
+#             converted_xbim_size.append((os.stat(file).st_size / (1024 * 1024)))
+#         else:  # (os.path.isfile(file) and os.path.splitext(file)[1].casefold() == '.xBIM'.casefold() or ):
+#             converted_xbim_size.append('[ОШИБКА] xBIM файл отсутствует')
+#
+#     model_size = [round(v, 2) for v in model_size]
+#     converted_xbim_size = [round(v, 2) for v in converted_xbim_size]
+#
+#     return model_name, model_size, converted_xbim_size
 
 
 def clear_xbim_files(directory_path):

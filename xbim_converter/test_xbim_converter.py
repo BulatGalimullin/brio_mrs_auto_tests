@@ -3,7 +3,7 @@ import time
 from prettytable import PrettyTable
 import pytest
 
-converter_path = 'C:/Users/bigalimullin.NUR/Desktop/BRIO MRS 1.2.1.3315d-/xBIM Converter/xBIM Converter.exe'
+converter_path = 'C:/Users/bigalimullin.NUR/Desktop/BRIO MRS 1.2.1.4042d-/xBIM Converter/xBIM Converter.exe'
 
 
 class TestXbimConverterWithoutNavis:
@@ -25,6 +25,7 @@ class TestXbimConverterWithoutNavis:
         assert status is True, F"Failed to convert model {model_path}"
         assert grid_file is True, F"There is no .grids file for a given model {model_path}"
 
+    @pytest.mark.test
     def test_convert_gladilova_10_times(self):
         model_path = 'C:/Users/bigalimullin.NUR/Documents/Brio MRS/Database/test/00_Gladilova_AC_(IFC2x3)_05062020.ifczip'
         all_attempts = []
@@ -36,7 +37,6 @@ class TestXbimConverterWithoutNavis:
 
         assert fail_attempts == 0, F'Failed to convert model 00_Gladilova_AC_(IFC2x3)_05062020.ifczip {all_attempts},' \
                                    F' Failed attempts: {fail_attempts}, Successful attempts: {success_attempts} '
-
 
     def test_convert_folder_of_models_to_xbim_with_report(self, capsys):
         dir_path = 'C:/Users/bigalimullin.NUR/Documents/Brio MRS/Database/test'
@@ -54,7 +54,6 @@ class TestXbimConverterWithoutNavis:
             model_sizes.append(model_size)
 
             if status is False:
-                convert_times.append('Н/Д')
                 xbim_sizes.append('Н/Д')
             elif status is True:
                 elapsed_time = round(time.time() - start_time, 2)
@@ -80,7 +79,6 @@ class TestXbimConverterWithoutNavis:
 
 
 class TestXbimConverterWithNavis:
-
     @pytest.mark.parametrize('model_path',
                              xb.get_models_full_paths('C:/test_models/FBX', True) + xb.get_models_full_paths(
                                  'C:/test_models/STEP', True) + xb.get_models_full_paths('C:/test_models/NWC', True))
