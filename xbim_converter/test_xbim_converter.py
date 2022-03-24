@@ -25,7 +25,6 @@ class TestXbimConverterWithoutNavis:
         assert status is True, F"Failed to convert model {model_path}"
         assert grid_file is True, F"There is no .grids file for a given model {model_path}"
 
-    @pytest.mark.test
     def test_convert_gladilova_10_times(self):
         model_path = 'C:/Users/bigalimullin.NUR/Documents/Brio MRS/Database/test/00_Gladilova_AC_(IFC2x3)_05062020.ifczip'
         all_attempts = []

@@ -9,6 +9,9 @@ class BasePageLocators:
 class MainPageLocators:
     RETURN_TO_MAIN_PAGE_LINK = (By.CSS_SELECTOR, "main a.nav-link[href='/']")
     MANAGE_USERS_LINK = (By.CSS_SELECTOR, "a[href='/Users']")
+
+
+class UserPageLocators:
     USERS_TABLE = (By.CSS_SELECTOR, "table.table.table-striped")
     # USERS_TABLE_LOGIN = (By.XPATH, '//table[@class="table table-striped"]//th[text()="Login"]')
     # USERS_TABLE_SURNAME = (By.XPATH, '//table[@class="table table-striped"]//th[text()="Surname"]')
@@ -21,8 +24,7 @@ class MainPageLocators:
     #
     PAGE_NUMBER = []
     for n in range(20):
-        page_number = (By.CSS_SELECTOR, F"ul.pagination > li:nth-child({n+1}) > a")
-        PAGE_NUMBER.append(page_number)
+        PAGE_NUMBER.append((By.CSS_SELECTOR, F"ul.pagination > li:nth-child({n+1}) > a"))
     #
     SEARCH_PLACE = (By.NAME, "search")
     SEARCH_BUTTON = (By.CSS_SELECTOR, "[type=submit]")
