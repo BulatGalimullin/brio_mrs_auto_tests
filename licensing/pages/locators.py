@@ -11,21 +11,24 @@ class MainPageLocators:
     MANAGE_USERS_LINK = (By.CSS_SELECTOR, "a[href='/Users']")
 
 
-class UserPageLocators:
+class UsersPageLocators:
     USERS_TABLE = (By.CSS_SELECTOR, "table.table.table-striped")
-    # USERS_TABLE_LOGIN = (By.XPATH, '//table[@class="table table-striped"]//th[text()="Login"]')
+    USERS_TABLE_FIRST_LOGIN = (By.CSS_SELECTOR, 'table > tbody > tr:first-child  > td:nth-child(2) > a')
     # USERS_TABLE_SURNAME = (By.XPATH, '//table[@class="table table-striped"]//th[text()="Surname"]')
     # USERS_TABLE_NAME = (By.XPATH, '//table[@class="table table-striped"]//th[text()="Name"]')
     # USERS_TABLE_PATRONYMIC = (By.XPATH, '//table[@class="table table-striped"]//th[text()="Patronymic"]')
     # USERS_TABLE_EMAIL = (By.XPATH, '//table[@class="table table-striped"]//th[text()="Email"]')
+
     FIRST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:first-child > a")
     LAST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:last-child > a")
     PENULTIMATE_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:nth-last-child(2) > a")
+
     #
     PAGE_NUMBER = []
     for n in range(20):
-        PAGE_NUMBER.append((By.CSS_SELECTOR, F"ul.pagination > li:nth-child({n+1}) > a"))
+        PAGE_NUMBER.append((By.CSS_SELECTOR, F"ul.pagination > li:nth-child({n + 1}) > a"))
     #
+
     SEARCH_PLACE = (By.NAME, "search")
     SEARCH_BUTTON = (By.CSS_SELECTOR, "[type=submit]")
     #
@@ -57,5 +60,20 @@ class LoginPageLocators:
     ALERT_MESSAGE = (By.CSS_SELECTOR, "div.alert-danger")
     CANCEL_BUTTON = (By.CSS_SELECTOR, "button[value = 'cancel']")
     POST_LOGOUT_REDIRECT_LINK = (By.CLASS_NAME, "PostLogoutRedirectUri")
+
+
+class LicensesPageLocators:
+    LICENSES_TABLE = (By.CSS_SELECTOR, "table.table.table-striped")
+    ADD_LICENSE_BUTTON = (By.CSS_SELECTOR, ".add-item-form > a.btn")
+
+    FIRST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:first-child > a")
+    LAST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:last-child > a")
+    #
+    PAGE_NUMBER = []
+    for n in range(20):
+        PAGE_NUMBER.append((By.CSS_SELECTOR, F"ul.pagination > li:nth-child({n + 1}) > a"))
+    #
+
+
 
 

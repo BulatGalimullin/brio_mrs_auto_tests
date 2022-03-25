@@ -2,8 +2,6 @@ from .pages.main_page import MainPage
 from .pages.login_page import LoginPage
 from .pages.users_page import UsersPage
 import pytest
-import random
-import time
 
 link = "https://licensing.briogroup.ru"
 

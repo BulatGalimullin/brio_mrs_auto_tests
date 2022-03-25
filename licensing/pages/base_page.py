@@ -56,3 +56,6 @@ class BasePage:
         link = self.browser.find_element(*BasePageLocators.LOGOUT_LINK)
         link.click()
 
+
+
+

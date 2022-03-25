@@ -1,9 +1,10 @@
 from .pages.main_page import MainPage
 from .pages.login_page import LoginPage
 from .pages.users_page import UsersPage
+from .pages.licensing_page import LicencesPage
+import time
 import pytest
 import random
-import time
 
 base_link = "https://licensing.briogroup.ru"
 link = base_link + '/Users'
@@ -33,12 +34,10 @@ class TestAdminActions:
         page.go_to_the_page_number('first')
         page.should_be_manage_users_page()
 
-    @pytest.mark.test1
     def test_change_users_page_with_numbers_button(self, browser):
         page = UsersPage(browser, link)
         page.open()
         page.go_to_the_page_number(2)
-        time.sleep(5)
         page.should_be_manage_users_page()
 
     def test_use_users_search(self, browser):
@@ -60,7 +59,16 @@ class TestAdminActions:
         page = UsersPage(browser, link)
         page.open()
         page.fill_user_email_field(F"test@test{random.randrange(10000000)}")
-    # TODO: недописан
+    # TODO: недописан (подсказки выводятся самим браузером)
+
+    def test_admin_can_open_managing_licenses_page(self, browser):
+        page = UsersPage(browser, link)
+        page.open()
+        page.open_first_login_in_the_users_table()
+        licenses_page = LicencesPage(browser, browser.current_url)
+        licenses_page.should_be_managing_licenses_page()
+        licenses_page.should_be_add_licenses_button()
+
 
 @pytest.mark.test
 class TestAdminAddUsers:
