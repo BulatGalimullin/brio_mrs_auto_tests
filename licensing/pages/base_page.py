@@ -5,7 +5,7 @@ from .locators import BasePageLocators
 
 
 class BasePage:
-    def __init__(self, browser, url, timeout=1):
+    def __init__(self, browser, url, timeout=3):
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
@@ -55,6 +55,7 @@ class BasePage:
     def logout(self):
         link = self.browser.find_element(*BasePageLocators.LOGOUT_LINK)
         link.click()
+
 
 
 

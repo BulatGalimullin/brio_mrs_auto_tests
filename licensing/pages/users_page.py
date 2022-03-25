@@ -8,17 +8,17 @@ class UsersPage(BasePage):
 
     # ACTIONS
 
-    def go_to_the_page_number(self, number):
+    def go_to_the_users_page_number(self, number):
         if isinstance(number, str) and number.casefold() == 'first':
             self.browser.find_element(*UsersPageLocators.FIRST_PAGE).click()
             assert 'page=1' in self.browser.current_url, "This is not first page"
         elif isinstance(number, str) and number.casefold() == 'last':
             self.browser.find_element(*UsersPageLocators.LAST_PAGE).click()
-            self.should_be_the_last_page()
+            self.should_be_the_last_users_page()
         elif isinstance(number, int) and number <= 20:
             current_page = self.browser.find_element(*UsersPageLocators.PAGE_NUMBER[number])
             current_page.click()
-        assert F'page={number}' in self.browser.current_url, F"This is not page number {number}"
+            assert F'page={number}' in self.browser.current_url, F"This is not page number {number}"
 
     def search_user(self, user):
         self.browser.find_element(*UsersPageLocators.SEARCH_PLACE).send_keys(user)
@@ -62,16 +62,16 @@ class UsersPage(BasePage):
     def cancel_user_adding(self):
         self.browser.find_element(*UsersPageLocators.ADD_USER_CANCEL_BUTTON).click()
 
-    def delete_user(self, user):
+    def go_to_delete_user_confirmation_page(self, user):
         self.search_user(user)
         if self.browser.find_element(*UsersPageLocators.USERS_TABLE_FIRST_LOGIN_FIELD).text == user:
             self.browser.find_element(*UsersPageLocators.DELETE_BUTTON_USER_NUMBER[1]).click()
         else:
             assert False, F"Didn't find user {user} in the list"
-        if self.browser.find_element(*UsersPageLocators.ADD_USER_LOGIN_FIELD).text == user:
-            time.sleep(5)
+
+    def delete_user_confirmation(self, user):
+        if self.browser.find_element(*UsersPageLocators.ADD_USER_LOGIN_FIELD).get_attribute('value') == user:
             self.browser.find_element(*UsersPageLocators.DELETE_CONFIRMATION_BUTTON).click()
-            time.sleep(5)
         else:
             assert False, F"Couldn't delete user {user}"
 
@@ -90,7 +90,7 @@ class UsersPage(BasePage):
         assert "/Users" in self.browser.current_url, "Url of the page doesn't contain '/Users'"
         assert self.is_element_present(*UsersPageLocators.USERS_TABLE), "There is no table with registered users"
 
-    def should_be_the_last_page(self):
+    def should_be_the_last_users_page(self):
         assert self.browser.find_element(*UsersPageLocators.PENULTIMATE_PAGE).get_attribute(
             "href") in self.browser.current_url, "This is not the last page"
 

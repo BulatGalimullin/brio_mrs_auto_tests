@@ -68,11 +68,20 @@ class LicensesPageLocators:
 
     FIRST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:first-child > a")
     LAST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:last-child > a")
+    LICENSES_PENULTIMATE_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:nth-last-child(2) > a")
     #
     PAGE_NUMBER = []
     for n in range(20):
         PAGE_NUMBER.append((By.CSS_SELECTOR, F"ul.pagination > li:nth-child({n + 1}) > a"))
     #
+    OPEN_LICENSE_NUMBER = []
+    for n in range(10):
+        user_to_delete = (By.CSS_SELECTOR, F"tr:nth-child({n}) td:last-child > a.btn-primary")
+        OPEN_LICENSE_NUMBER .append(user_to_delete)
+    #
+    DOWNLOAD_LICENSE_BUTTON = (By.CSS_SELECTOR, "div.d-flex > a")
+    REVOKE_BUTTON = (By.CSS_SELECTOR, "div.d-flex > form")
+
 
 
 
