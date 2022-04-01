@@ -3,6 +3,10 @@ import time
 from prettytable import PrettyTable
 import pytest
 
+# Предусловия:
+# 1) Тестовые модели скачать отсюда https://cloud.briogroup.ru/f/48141 и скопировать содержимое в С:/test_models/
+# 2) Указать путь до конвертера :
+
 converter_path = 'C:/Users/bigalimullin.NUR/Desktop/BRIO MRS 1.2.1.4042d-/xBIM Converter/xBIM Converter.exe'
 
 
@@ -26,7 +30,7 @@ class TestXbimConverterWithoutNavis:
         assert grid_file is True, F"There is no .grids file for a given model {model_path}"
 
     def test_convert_gladilova_10_times(self):
-        model_path = 'C:/Users/bigalimullin.NUR/Documents/Brio MRS/Database/test/00_Gladilova_AC_(IFC2x3)_05062020.ifczip'
+        model_path = 'C:/test_models/IFC/problematic/00_Gladilova_AC_(IFC2x3)_05062020.ifczip'
         all_attempts = []
         for i in range(10):
             status = xb.convert_to_xbim(converter_path, model_path)
@@ -38,7 +42,7 @@ class TestXbimConverterWithoutNavis:
                                    F' Failed attempts: {fail_attempts}, Successful attempts: {success_attempts} '
 
     def test_convert_folder_of_models_to_xbim_with_report(self, capsys):
-        dir_path = 'C:/Users/bigalimullin.NUR/Documents/Brio MRS/Database/test'
+        dir_path = 'C:/test_models'
         convert_times = []
         model_sizes = []
         xbim_sizes = []
