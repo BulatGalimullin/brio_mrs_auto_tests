@@ -80,6 +80,16 @@ class TestXbimConverterWithoutNavis:
 
         assert output_table is not None, "Таблицы нет"
 
+    @pytest.mark.trye
+    def test_convert_stl_file_with_no_split_option(self):
+        model_path = 'C:/test_models/STl/vI_Motorcycle wheel (146 068).stl'
+        status = xb.convert_to_xbim(converter_path, model_path, no_split=True)
+
+        assert status is True, F"Failed to convert model {model_path} with no-split option"
+
+
+
+
 
 class TestXbimConverterWithNavis:
     @pytest.mark.parametrize('model_path',

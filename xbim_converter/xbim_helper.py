@@ -1,10 +1,15 @@
 import subprocess
 import os
 
-def convert_to_xbim(converter_path, file_path):  # запускает конвертер моделей в xBim
+
+def convert_to_xbim(converter_path, file_path, no_split=False):  # запускает конвертер моделей в xBim
     success = True
     text = []
-    argus = F"\"{converter_path}\"" + ' -f ' + F"\"{file_path}\""
+    if no_split:
+        argus = F"\"{converter_path}\"" + ' -f ' + F"\"{file_path}\"" + ' --no-split'
+    else:
+        argus = F"\"{converter_path}\"" + ' -f ' + F"\"{file_path}\""
+
     xbim_convert = subprocess.Popen(argus, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     while xbim_convert.poll() is None:
         output_line = xbim_convert.stderr.readlines()

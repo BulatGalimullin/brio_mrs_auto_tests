@@ -1,5 +1,18 @@
 from .base_page import BasePage
 from .locators import *
+import os
+import time
+import pytest
+
+
+def latest_download_file(download_path):
+    os.chdir(download_path)
+    files = sorted(os.listdir(os.getcwd()), key=os.path.getmtime)
+    newest = files[-1]
+    if os.path.isfile(newest):
+        return newest
+    else:
+        raise ValueError("%s this path didn't contain files!" % download_path)
 
 
 class LicencesPage(BasePage):
@@ -21,7 +34,8 @@ class LicencesPage(BasePage):
             "href") in self.browser.current_url, "This is not the last page"
 
     def should_be_download_license_button(self):
-        assert self.is_element_present(*LicensesPageLocators.DOWNLOAD_LICENSE_BUTTON), "Not possible to download license file"
+        assert self.is_element_present(
+            *LicensesPageLocators.DOWNLOAD_LICENSE_BUTTON), "Not possible to download license file"
 
     def should_be_revoke_button(self):
         assert self.is_element_present(*LicensesPageLocators.REVOKE_BUTTON), "Not possible to revoke license file"
@@ -46,3 +60,21 @@ class LicencesPage(BasePage):
 
     def open_license_info_nth_license(self, number):
         self.browser.find_element(*LicensesPageLocators.OPEN_LICENSE_NUMBER[number]).click()
+
+    def download_license_file(self, path_to_download='default'):
+        self.browser.find_element(*LicensesPageLocators.DOWNLOAD_LICENSE_BUTTON).click()
+        if path_to_download == 'default':
+            self.is_download_finished(pytest.def_download_folder)
+        # else:
+        # os.chdir()
+
+    def is_download_finished(self, download_path=pytest.def_download_folder):
+        download_finished = False
+        while download_finished is False:
+            time.sleep(0.5)
+            newest_file = latest_download_file(download_path)
+            if ".crdownload" in newest_file or ".part" in newest_file:
+                download_finished = False
+            else:
+                download_finished = True
+        assert download_finished, "File is not downloaded"

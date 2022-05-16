@@ -36,13 +36,13 @@ class TestAdminActions:
         page.is_this_user_presented_in_the_users_page("zzz_test")
     # TODO: всего лишь 1 тест на поиск? Серьёзно?
 
-    @pytest.mark.test
     def test_admin_can_go_to_add_users(self, browser):
         page = UsersPage(browser, link)
         page.open()
         page.go_to_add_users_page()
         page.should_be_add_users_page()
 
+    @pytest.mark.skip
     def test_add_users_page_email_field_checks(self, browser):
         link = self.link + '/Users/AddUser'
         page = UsersPage(browser, link)
@@ -57,7 +57,6 @@ class TestAdminActions:
         licenses_page = LicencesPage(browser, browser.current_url)
         licenses_page.should_be_managing_licenses_page()
         licenses_page.should_be_add_licenses_button()
-
 
 
 class TestAdminAddUsers:
@@ -77,7 +76,6 @@ class TestAdminAddUsers:
         self.page.delete_user_confirmation(self.login)
         #TODO: удалять пользователя таким способом - не очень хороший, переделать
 
-    @pytest.mark.test1
     def test_admin_can_add_user_with_patronymic(self, browser):
         link = self.link + '/Users/AddUser'
         page = UsersPage(browser, link)

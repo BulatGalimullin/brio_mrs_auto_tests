@@ -2,7 +2,7 @@ from .pages.main_page import MainPage
 from .pages.login_page import LoginPage
 from .pages.licensing_page import LicencesPage
 import pytest
-
+import time
 
 base_link = "https://licensing.briogroup.ru"
 zzz_test_link = '/Licenses?userId=97de743a-8a8a-4524-bef9-2fdc12f144de'
@@ -10,7 +10,7 @@ zzz_test_link = '/Licenses?userId=97de743a-8a8a-4524-bef9-2fdc12f144de'
 class TestLicencesPagesAsUser:
 
     @pytest.fixture(scope='function', autouse=True)
-    def setup_method(self, browser):
+    def login_as_user(self, browser):
         self.link = base_link
         self.page = MainPage(browser, self.link)
         self.page.open()
@@ -40,7 +40,7 @@ class TestLicencesPagesAsUser:
 class TestLicencesPagesAsAdmin:
 
     @pytest.fixture(scope='function', autouse=True)
-    def setup_method(self, browser):
+    def login_as_admin(self, browser):
         self.link = base_link
         self.page = MainPage(browser, self.link)
         self.page.open()
@@ -65,5 +65,13 @@ class TestLicencesPagesAsAdmin:
         licenses_page.open_license_info_nth_license(1)
         licenses_page.should_be_download_license_button()
         licenses_page.should_be_revoke_button()
+
+    @pytest.mark.test
+    def test_admin_can_download_license_file(self, browser):
+        link = base_link + zzz_test_link
+        licenses_page = LicencesPage(browser, link)
+        licenses_page.open()
+        licenses_page.open_license_info_nth_license(1)
+        licenses_page.download_license_file()
 
 
