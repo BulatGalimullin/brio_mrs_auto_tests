@@ -81,6 +81,9 @@ class LicensesPageLocators:
     #
     DOWNLOAD_LICENSE_BUTTON = (By.CSS_SELECTOR, "div.d-flex > a")
     REVOKE_BUTTON = (By.CSS_SELECTOR, "div.d-flex > form")
+    SUBMIT_ADD_LICENSE_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
+    CANCEL_ADD_LICENSE_BUTTON = (By.CSS_SELECTOR, "a.btn-secondary.mt-3")
+
 
 
 

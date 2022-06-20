@@ -61,6 +61,12 @@ class LicencesPage(BasePage):
     def open_license_info_nth_license(self, number):
         self.browser.find_element(*LicensesPageLocators.OPEN_LICENSE_NUMBER[number]).click()
 
+    def open_add_new_license_page(self):
+        self.browser.find_element(*LicensesPageLocators.ADD_LICENSE_BUTTON).click()
+
+    def cancel_adding_new_license(self):
+        self.browser.find_element(*LicensesPageLocators.CANCEL_ADD_LICENSE_BUTTON).click()
+
     def download_license_file(self, path_to_download='default'):
         self.browser.find_element(*LicensesPageLocators.DOWNLOAD_LICENSE_BUTTON).click()
         if path_to_download == 'default':
@@ -78,3 +84,4 @@ class LicencesPage(BasePage):
             else:
                 download_finished = True
         assert download_finished, "File is not downloaded"
+

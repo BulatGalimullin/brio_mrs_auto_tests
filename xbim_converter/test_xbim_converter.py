@@ -1,4 +1,4 @@
-import xbim_helper as xb
+from xbim_converter import xbim_helper as xb
 import time
 from prettytable import PrettyTable
 import pytest

@@ -58,6 +58,7 @@ class TestLicencesPagesAsAdmin:
         licenses_page.should_be_managing_licenses_page()
         licenses_page.should_be_add_licenses_button()
 
+    @pytest.mark.test
     def test_admin_can_open_licenses_of_user(self, browser):
         link = base_link + zzz_test_link
         licenses_page = LicencesPage(browser, link)
@@ -66,12 +67,20 @@ class TestLicencesPagesAsAdmin:
         licenses_page.should_be_download_license_button()
         licenses_page.should_be_revoke_button()
 
-    @pytest.mark.test
     def test_admin_can_download_license_file(self, browser):
         link = base_link + zzz_test_link
         licenses_page = LicencesPage(browser, link)
         licenses_page.open()
         licenses_page.open_license_info_nth_license(1)
         licenses_page.download_license_file()
+
+    @pytest.mark.test
+    def test_admin_can_cancel_license_creation(self, browser):
+        link = base_link + zzz_test_link
+        licenses_page = LicencesPage(browser, link)
+        licenses_page.open()
+        licenses_page.open_add_new_license_page()
+        licenses_page.cancel_adding_new_license()
+        licenses_page.should_be_managing_licenses_page()
 
 
