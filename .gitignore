@@ -133,3 +133,5 @@ dmypy.json
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
 /.idea/brio_mrs_auto_tests.iml
+/imglog/
+/launcher/imglog/
