@@ -1,17 +1,17 @@
-from .pages.login_page import LoginPage
-import pytest
 import time
 
+import pytest
+
+from .pages.login_page import LoginPage
 
 link = "https://identity.briogroup.ru/Account/Login"
 
 
 class TestLoginPage:
     @pytest.mark.parametrize('login,password',
-                         [(" ", "no_login"), ("no_password", "  "), ("  ", "  "), ("incorrect", "incorrect")])
+                             [(" ", "no_login"), ("no_password", "  "), ("  ", "  "), ("incorrect", "incorrect")])
     def test_try_to_login_with_incorrect_inputs(self, browser, login, password):
         login_page = LoginPage(browser, link)
-        login_page.open()
         login_page.login(login, password)
         time.sleep(0.01)
         login_page.should_be_error_message()
