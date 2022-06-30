@@ -1,8 +1,13 @@
+import logging
 import os
 
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
+
+logging.getLogger('WDM').setLevel(logging.NOTSET)
 
 
 def pytest_addoption(parser):
@@ -21,6 +26,7 @@ def browser(request):
     browser_name = request.config.getoption("browser_name")
     user_language = request.config.getoption('language')
     default_download_folder = {'download.default_directory': pytest.def_download_folder}
+    webdriver.Chrome(ChromeDriverManager().install())
 
     if browser_name == "chrome":
         options = Options()
@@ -32,6 +38,7 @@ def browser(request):
         print("\nstart chrome browser for test..")
         browser = webdriver.Chrome(options=options)
     elif browser_name == "firefox":
+        webdriver.Firefox(executable_path=GeckoDriverManager().install())
         fp = webdriver.FirefoxProfile()
         fp.set_preference("intl.accept_languages", user_language)
 
