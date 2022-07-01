@@ -4,20 +4,35 @@ from .pages.licensing_page import LicencesPage
 from .pages.login_page import LoginPage
 from .pages.main_page import MainPage
 
+'''Links'''
 base_link = "https://licensing.briogroup.ru"
 zzz_test_link = '/Licenses?userId=97de743a-8a8a-4524-bef9-2fdc12f144de'
 
+'''Fixtures'''
 
+
+@pytest.fixture
+def _as_admin(browser):
+    link = base_link
+    page = MainPage(browser, link)
+    page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    login_page.login('admin', 'Qwe123!')
+    login_page.should_be_authorized_user()
+
+
+@pytest.fixture
+def _as_user(browser):
+    link = base_link
+    page = MainPage(browser, link)
+    page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    login_page.login('zzz_test', 'Qwe1234!')
+    login_page.should_be_authorized_user()
+
+
+@pytest.mark.usefixtures("_as_user")
 class TestLicencesPagesAsUser:
-
-    @pytest.fixture(scope='function', autouse=True)
-    def login_as_user(self, browser):
-        self.link = base_link
-        self.page = MainPage(browser, self.link)
-        self.page.go_to_login_page()
-        self.login_page = LoginPage(browser, browser.current_url)
-        self.login_page.login('zzz_test', 'Qwe1234!')
-        self.login_page.should_be_authorized_user()
 
     @pytest.mark.parametrize("list_number", ["last", "first", 1, 2])
     def test_user_can_change_licenses_page_with_buttons(self, browser, list_number):
@@ -35,16 +50,8 @@ class TestLicencesPagesAsUser:
         licenses_page.should_not_be_revoke_button()
 
 
+@pytest.mark.usefixtures("_as_admin")
 class TestLicencesPagesAsAdmin:
-
-    @pytest.fixture(scope='function', autouse=True)
-    def login_as_admin(self, browser):
-        self.link = base_link
-        self.page = MainPage(browser, self.link)
-        self.page.go_to_login_page()
-        self.login_page = LoginPage(browser, browser.current_url)
-        self.login_page.login('admin', 'Qwe123!')
-        self.login_page.should_be_authorized_user()
 
     @pytest.mark.parametrize("list_number", ["last", "first", 1, 2])
     def test_admin_can_change_licenses_page_with_buttons(self, browser, list_number):
@@ -67,7 +74,6 @@ class TestLicencesPagesAsAdmin:
         licenses_page.open_license_info_nth_license(1)
         licenses_page.download_license_file()
 
-    @pytest.mark.fff
     def test_admin_can_cancel_license_creation(self, browser):
         link = base_link + zzz_test_link
         licenses_page = LicencesPage(browser, link)

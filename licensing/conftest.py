@@ -18,6 +18,7 @@ def pytest_addoption(parser):
 
 
 def pytest_configure():
+    """Variables"""
     pytest.def_download_folder = 'C:\\Downloads\\Selenium_downloads'
 
 

@@ -1,8 +1,11 @@
-from .base_page import BasePage
-from .locators import *
 import os
 import time
+from datetime import datetime
+
 import pytest
+
+from .base_page import BasePage
+from .locators import *
 
 
 def latest_download_file(download_path):
@@ -15,9 +18,21 @@ def latest_download_file(download_path):
         raise ValueError("%s this path didn't contain files!" % download_path)
 
 
-class LicencesPage(BasePage):
+def is_download_finished(download_path=pytest.def_download_folder):
+    download_finished = False
+    while download_finished is False:
+        time.sleep(0.5)
+        newest_file = latest_download_file(download_path)
+        if ".crdownload" in newest_file or ".part" in newest_file:
+            download_finished = False
+        else:
+            download_finished = True
+    assert download_finished, "File is not downloaded"
 
-    # CHECKS
+
+class LicencesPage(BasePage):
+    """CHECKS"""
+
     def should_be_managing_licenses_page(self):
         assert "/Licenses" in self.browser.current_url, "Url of the page doesn't contain '/Licences'"
         assert self.is_element_present(*LicensesPageLocators.LICENSES_TABLE), "There is no table with licenses"
@@ -45,7 +60,7 @@ class LicencesPage(BasePage):
                                                                                  "file. User should not be able to do" \
                                                                                  " that "
 
-    # ACTIONS
+    """ACTIONS"""
     def go_to_the_licenses_page_number(self, number):
         if isinstance(number, str) and number.casefold() == 'first':
             self.browser.find_element(*LicensesPageLocators.FIRST_PAGE).click()
@@ -70,7 +85,7 @@ class LicencesPage(BasePage):
     def download_license_file(self, path_to_download='default'):
         self.browser.find_element(*LicensesPageLocators.DOWNLOAD_LICENSE_BUTTON).click()
         if path_to_download == 'default':
-            self.is_download_finished(pytest.def_download_folder)
+            is_download_finished(pytest.def_download_folder)
         # else:
         # os.chdir()
 
