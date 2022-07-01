@@ -1,5 +1,14 @@
-import subprocess
 import os
+import subprocess
+
+import pytest
+
+
+def pytest_configure():
+    """Variables"""
+    pytest.xbim_converter_path = os.path.join(
+        r"C:\brio_mrs_test_data\builds\BRIO MRS 1.2.1.5721d-\xBIM Converter\xBIM Converter.exe")
+    pytest.test_models_path = r"C:\brio_mrs_test_data\test_models"
 
 
 def convert_to_xbim(converter_path, file_path, no_split=False):  # запускает конвертер моделей в xBim
@@ -19,6 +28,9 @@ def convert_to_xbim(converter_path, file_path, no_split=False):  # запуск�
 
     if bool(text):  # если text пустой, то
         success = False
+
+    dir_name = os.path.dirname(file_path)
+    clear_xbim_files(dir_name)
 
     return success
 
