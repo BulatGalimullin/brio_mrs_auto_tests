@@ -74,3 +74,16 @@ class TestLicencesPagesAsAdmin:
         licenses_page.open_add_new_license_page()
         licenses_page.cancel_adding_new_license()
         licenses_page.should_be_managing_licenses_page()
+
+
+@pytest.mark.usefixtures("_as_admin")
+class TestGenerateLicenses:
+    @pytest.mark.test
+    def test_generate_license_with_time_limit_one_session(self, browser):
+        link = base_link + zzz_test_link
+        licenses_page = LicencesPage(browser, link)
+        licenses_page.open_add_new_license_page()
+        licenses_page.choose_time_limit_from_launch_to_license("00:01")
+        licenses_page.submit_license_creation()
+        licenses_page.open_license_info_nth_license(1)
+        licenses_page.download_license_file()

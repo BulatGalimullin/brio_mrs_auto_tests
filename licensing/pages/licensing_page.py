@@ -74,14 +74,18 @@ class LicencesPage(BasePage):
         # else:
         # os.chdir()
 
-    def is_download_finished(self, download_path=pytest.def_download_folder):
-        download_finished = False
-        while download_finished is False:
-            time.sleep(0.5)
-            newest_file = latest_download_file(download_path)
-            if ".crdownload" in newest_file or ".part" in newest_file:
-                download_finished = False
-            else:
-                download_finished = True
-        assert download_finished, "File is not downloaded"
+    def choose_time_limit_from_launch_to_license(self, limit_value):
+        """limit_value: max - 23 hours and 59 minutes = "23:59" """
+        self.browser.find_element(*LicensesPageLocators.TIME_LIMIT_FROM_LAUNCH_CHECKBOX).click()
+        self.browser.find_element(*LicensesPageLocators.TIME_LIMIT_FROM_LAUNCH_INPUT_FIELD).send_keys(limit_value)
+        current_val = self.browser.find_element(*LicensesPageLocators.TIME_LIMIT_FROM_LAUNCH_INPUT_FIELD).get_attribute(
+            "value")
+        assert limit_value in current_val, "The input value is not equal to the displayed value"
 
+    def submit_license_creation(self):
+        self.browser.find_element(*LicensesPageLocators.SUBMIT_ADD_LICENSE_BUTTON).click()
+        date_time_license = self.browser.find_element(*LicensesPageLocators.CREATION_DATE_FIRST_LICENSE).text
+        time.sleep(0.25)
+        date_time_current = datetime.utcnow().strftime(f"%m/%d/%Y %H:%M:%S")
+        assert date_time_license == date_time_current, f"Creation date of the license {date_time_license} not equal " \
+                                                       f"to the current date {date_time_current} "

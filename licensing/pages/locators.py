@@ -65,6 +65,12 @@ class LoginPageLocators:
 class LicensesPageLocators:
     LICENSES_TABLE = (By.CSS_SELECTOR, "table.table.table-striped")
     ADD_LICENSE_BUTTON = (By.CSS_SELECTOR, ".add-item-form > a.btn")
+    CREATION_DATE_FIRST_LICENSE = (By.CSS_SELECTOR, "tr:nth-child(1) > td:nth-child(3)")
+
+    OPEN_LICENSE_NUMBER = []
+    for n in range(10):
+        open_license_button = (By.CSS_SELECTOR, F"tr:nth-child({n}) td:last-child > a.btn-primary")
+        OPEN_LICENSE_NUMBER.append(open_license_button)
 
     FIRST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:first-child > a")
     LAST_PAGE = (By.CSS_SELECTOR, "ul.pagination > li:last-child > a")
@@ -83,9 +89,11 @@ class LicensesPageLocators:
     REVOKE_BUTTON = (By.CSS_SELECTOR, "div.d-flex > form")
     SUBMIT_ADD_LICENSE_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
     CANCEL_ADD_LICENSE_BUTTON = (By.CSS_SELECTOR, "a.btn-secondary.mt-3")
-
-
-
-
-
-
+    TIME_LIMIT_FROM_LAUNCH_CHECKBOX = (By.CSS_SELECTOR, '[data-target="#timeLimitFromLaunchEdit"]')
+    TIME_LIMIT_FROM_LAUNCH_INPUT_FIELD = (By.ID, 'fromLaunchTime')
+    TIME_LIMIT_CUMULATIVE_CHECKBOX = (By.CSS_SELECTOR, '[data-target="#timeLimitCumulativeEdit"]')
+    TIME_LIMIT_CUMULATIVE_INPUT_FIELD = (By.ID, 'cumulativeTime')
+    TIME_LIMIT_FROM_FIRST_USE_CHECKBOX = (By.CSS_SELECTOR, '[data-target="#timeLimitFromFirstUseEdit"]')
+    TIME_LIMIT_FROM_FIRST_USE_DAYS_FIELD = (By.ID, 'TimeLimits_FromFirstUse__TimeDays')
+    TIME_LIMIT_FROM_FIRST_USE_HOURS_FIELD = (By.ID, 'TimeLimits_FromFirstUse__TimeHours')
+    TIME_LIMIT_FROM_FIRST_USE_MINUTES_FIELD = (By.ID, 'TimeLimits_FromFirstUse__TimeMinutes')
